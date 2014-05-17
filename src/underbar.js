@@ -103,9 +103,36 @@ var _ = {};
 
  
 
-  // Produce a duplicate-free version of the array.
-  _.uniq = function(array) {
-  };
+  //Produce a duplicate-free version of the array.  This one uses a for-loop.
+    _.uniq = function(array){
+     var duplicateFree = [];
+     var duplicateFreeIndex = 0;
+     for (var i=0; i < array.length; i++){
+        var numberEvaluated = array[i];
+        var uniqueValue = true;
+        for (var j=0; j<array.length; j++){
+          if (numberEvaluated == duplicateFree[j]){
+                  uniqueValue = false;
+                  break;
+          }
+        }
+
+    if (uniqueValue == true) {
+          duplicateFree[duplicateFreeIndex] = numberEvaluated;
+          duplicateFreeIndex++;
+    }
+}
+return duplicateFree;
+
+};
+
+
+ 
+
+
+
+
+
 
 
   // Return the results of applying an iterator to each element.
