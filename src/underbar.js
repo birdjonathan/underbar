@@ -127,19 +127,15 @@ return duplicateFree;
 };
 
 
- 
-
-
-
-
-
-
-
   // Return the results of applying an iterator to each element.
-  _.map = function(collection, iterator) {
-    // map() is a useful primitive iteration function that works a lot
-    // like each(), but in addition to running the operation on all
-    // the members, it also maintains an array of results.
+ 
+  _.map = function(collection, iterator){
+   var mapArray = [];
+   _.each(collection, function(value, index, list){
+   mapArray.push(iterator(value));
+
+   });
+  return mapArray;
   };
 
   /*
@@ -148,7 +144,7 @@ return duplicateFree;
    * as an example of this.
    */
 
-  // Takes an array of objects and returns and array of the values of
+  // Takes an array of objects and returns an array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(collection, key) {
@@ -162,7 +158,14 @@ return duplicateFree;
 
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
+//This works when provided a function reference
+
+  
+
   _.invoke = function(collection, functionOrKey, args) {
+      return _.map(collection, function(value) {
+         return functionOrKey.apply(value, [args]);      
+      });
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -179,6 +182,7 @@ return duplicateFree;
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+
   };
 
   // Determine if the array or object contains a given value (using `===`).
@@ -196,6 +200,8 @@ return duplicateFree;
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
+
+
     // TIP: Try re-using reduce() here.
   };
 
