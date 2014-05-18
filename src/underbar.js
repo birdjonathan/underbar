@@ -162,11 +162,16 @@ return duplicateFree;
 
   
 
-  _.invoke = function(collection, functionOrKey, args) {
-      return _.map(collection, function(value) {
-         return functionOrKey.apply(value, [args]);      
-      });
-  };
+ _.invoke = function(collection, functionOrKey, args) {
+  return _.map(collection, function(value){
+    if (typeof(functionOrKey) === 'function'){
+      return (functionOrKey).apply(value,args);
+    }
+    else {
+      return (value[functionOrKey]).apply(value,args);
+    }
+  });
+};
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
