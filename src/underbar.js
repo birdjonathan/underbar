@@ -162,7 +162,6 @@ return duplicateFree;
 //This works when provided a function reference
 
   
-
  _.invoke = function(collection, functionOrKey, args) {
   return _.map(collection, function(value){
     if (typeof(functionOrKey) === 'function'){
@@ -187,9 +186,16 @@ return duplicateFree;
   //   var sum = _.reduce(numbers, function(total, number){
   //     return total + number;
   //   }, 0); // should be 6
-  _.reduce = function(collection, iterator, accumulator) {
+ 
 
+_.reduce = function ( collection, iterator, accumulator ){
+  var collector = 0;
+    _.each(collection, function(value, index, list){
+       collector += iterator(collection[index], accumulator);
+  });
+    return collector;
   };
+
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
