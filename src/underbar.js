@@ -2,6 +2,7 @@
 
 var _ = {};
 
+
 (function() {
 
   // Returns whatever value is passed as the argument. This function doesn't
@@ -10,6 +11,7 @@ var _ = {};
   _.identity = function(val) {
     return val;
   };
+
 
   /**
    * COLLECTIONS
@@ -188,13 +190,13 @@ return duplicateFree;
   //   }, 0); // should be 6
  
 
-_.reduce = function ( collection, iterator, accumulator ){
-  var collector = 0;
-    _.each(collection, function(value, index, list){
-       collector += iterator(collection[index], accumulator);
-  });
-    return collector;
-  };
+_.reduce = function ( collection, iterator, accumulator ) {
+
+   _.each(collection, function (value, index, list){
+    accumulator = iterator (accumulator, value)
+   });
+   return accumulator;
+};
 
 
   // Determine if the array or object contains a given value (using `===`).
@@ -209,19 +211,42 @@ _.reduce = function ( collection, iterator, accumulator ){
     }, false);
   };
 
-
   // Determine whether all of the elements match a truth test.
-  _.every = function(collection, iterator) {
+  // _.every = function(collection, iterator) {
 
 
-    // TIP: Try re-using reduce() here.
+  //   // TIP: Try re-using reduce() here.
+  // }; 
+
+_.every = function (collection, iterator){
+  if (Object.prototype.toString.call(iterator) !== '[object Function]'){
+  iterator = _.identity;
+  }
+  var myResults = true;
+  return _.reduce(collection, function(accumulator, item){
+      myResults = accumulator && iterator(item);
+      return !!myResults;
+    }, true);
   };
+
+
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
-  _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
-  };
+ 
+
+_.some = function(collection, iterator){
+   if (Object.prototype.toString.call(iterator) !== '[object Function]'){
+  iterator = _.identity;
+}
+  for(var i = 0; i < collection.length; i++){
+      if (typeof iterator(collection[i]) == "string" || iterator(collection[i]) == true) return true;
+  }
+  return false;
+}
+
+
+
 
 
   /**
@@ -242,7 +267,19 @@ _.reduce = function ( collection, iterator, accumulator ){
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
+ 
+  
+
+
   _.extend = function(obj) {
+    _.each(slice.call(arguments, 1), function(source) {
+       if (source) {
+        for (var prop in source) {
+          obj[prop] = source[prop];
+        }
+       }   
+    });
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
@@ -367,3 +404,17 @@ _.reduce = function ( collection, iterator, accumulator ){
   };
 
 }).call(this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
