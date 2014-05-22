@@ -275,7 +275,13 @@ _.extend = function(destination, source){
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
-  _.defaults = function(obj) {
+  _.defaults = function(destination, source) {
+    _.each(arguments, function(source){
+     for (var property in source)
+      if (destination[property] === void "null")
+            destination[property] = source[property];
+    });
+    return destination;
   };
 
 
