@@ -246,9 +246,6 @@ _.some = function(collection, iterator){
 }
 
 
-
-
-
   /**
    * OBJECTS
    * =======
@@ -268,19 +265,13 @@ _.some = function(collection, iterator){
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
  
-  
-
-
-  _.extend = function(obj) {
-    _.each(slice.call(arguments, 1), function(source) {
-       if (source) {
-        for (var prop in source) {
-          obj[prop] = source[prop];
-        }
-       }   
-    });
-    return obj;
-  };
+_.extend = function(destination, source){
+   _.each(arguments, function(source){
+  for (var property in source)
+    destination[property] = source[property];
+  });
+  return destination;
+};
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
