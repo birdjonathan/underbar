@@ -341,8 +341,17 @@ _.memoize = function (func) {
   // The arguments for the original function are passed after the wait
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
-  _.delay = function(func, wait) {
-  };
+  
+  // _.delay = function(func, wait) {
+  // };
+
+_.delay = function(func, wait){
+  var arg = Array.prototype.slice.call(arguments, 2);
+  var myInterval = setTimeout(function(){
+                          return func.apply(null, arg); }, wait);
+  return myInterval;
+};
+
 
 
   /**
@@ -355,8 +364,35 @@ _.memoize = function (func) {
   // TIP: This function's test suite will ask that you not modify the original
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
-  _.shuffle = function(array) {
-  };
+  // _.shuffle = function(array) {
+
+  // };
+
+_.shuffle = function(array){
+  var newArray = array.slice(0);
+  var len = newArray.length;
+  _.each(newArray, function(value, index, list){
+   var randomIndex = parseInt(Math.random()*newArray.length);
+      newArray[newArray.length] = newArray[randomIndex];
+      newArray[randomIndex] = newArray[newArray.length];
+ });
+  
+  return newArray; 
+
+};
+  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /**
